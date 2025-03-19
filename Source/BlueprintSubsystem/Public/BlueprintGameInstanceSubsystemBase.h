@@ -48,4 +48,8 @@ protected:
 	 */
 	UFUNCTION(BlueprintImplementableEvent)
 	bool BP_ShouldCreateSubsystem() const;
+
+public:
+	bool IsInstantiated() const;
+	virtual class UWorld* GetWorld() const override;
 };

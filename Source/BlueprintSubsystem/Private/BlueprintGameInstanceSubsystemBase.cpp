@@ -27,3 +27,18 @@ bool UBlueprintGameInstanceSubsystemBase::ShouldCreateSubsystem(UObject* Outer) 
 	}
 	return Super::ShouldCreateSubsystem(Outer);
 }
+
+bool UBlueprintGameInstanceSubsystemBase::IsInstantiated() const
+{
+	return !HasAllFlags(RF_ClassDefaultObject);
+}
+
+class UWorld* UBlueprintGameInstanceSubsystemBase::GetWorld() const
+{
+	if (!IsInstantiated())
+	{
+		// If we are a CDO, we must return nullptr instead of calling Outer->GetWorld() to fool UObject::ImplementsGetWorld.
+		return nullptr;
+	}
+	return GetOuter()->GetWorld();
+}
